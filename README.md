@@ -1,47 +1,59 @@
-# robot-viz
-# Getting Started with Create React App
+# UR5 Collaborative Robot: Kinematic Analysis and Trajectory Planning
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive kinematic framework for the Universal Robots UR5 manipulator, featuring forward kinematics, differential inverse kinematics, and real-time trajectory planning with interactive web-based visualization.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This project implements a complete kinematic control system for the UR5 6-DOF collaborative robot, achieving smooth trajectory tracking with sub-3mm positional accuracy. The system includes forward kinematics using Denavit-Hartenberg parameters and a differential inverse kinematics controller that computes joint velocities in real-time using Jacobian pseudo-inverse methods.
 
-### `npm start`
+## Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Forward Kinematics**: DH parameter-based transformations and Product of Exponentials formulation
+- **Differential Inverse Kinematics**: Velocity-level controller using damped least-squares pseudo-inverse for numerical stability near singularities
+- **Trajectory Planning**: Three parametric motion primitives:
+  - Circular paths (100mm radius)
+  - Square paths (100mm sides)
+  - Sine wave trajectories (80-150mm wavelength)
+- **Interactive Visualization**: Web-based system built with Three.js and React featuring:
+  - Real-time end-effector pose display
+  - Joint angle control via sliders
+  - Manipulability metrics
+  - Animated waypoint visualization
+  - 20Hz real-time control updates
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Performance
 
-### `npm test`
+- Positional accuracy: <3mm across all trajectory types
+- Circular trajectory error: ~1.5mm (highest accuracy)
+- Square trajectory error: ~2-3mm (corners)
+- Update frequency: 20Hz (50ms intervals)
+- Workspace validation: Automatic verification within 900mm reachable envelope
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technical Approach
 
-### `npm run build`
+The project evolved from an initial Newton-Raphson iterative solver (which encountered configuration discontinuities and convergence failures) to a differential IK controller that reformulates the problem as real-time proportional control. This velocity-level approach eliminates convergence issues and enables smooth, continuous motion suitable for educational and research applications.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Links
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **📄 Full Report**: [Project Report (PDF)](https://github.com/shyam-sreenivasan/robot-viz/blob/master/Project-Report.pdf)
+- **🎥 Video Demo**: [YouTube](https://youtu.be/uaj2goZ3IgM)
+- **🚀 Live Demo**: [Interactive Visualization](https://robot-viz-entl.vercel.app/)
+- **💻 Source Code**: [GitHub Repository](https://github.com/shyam-sreenivasan/robot-viz/blob/master/src/App.jsx)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technologies
 
-### `npm run eject`
+- Three.js for 3D visualization
+- React for interactive UI
+- Jacobian pseudo-inverse with damped least-squares regularization
+- Denavit-Hartenberg parameter framework
+- Product of Exponentials formulation
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Author
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Shyam Sreenivasan  
+ME5250 - Robot Mechanics and Control - Project 2.1  
+Northeastern University, Boston, MA
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+*This project demonstrates practical application of differential kinematics for real-time robot control, bridging theoretical foundations with interactive visual simulation.*
